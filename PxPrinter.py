@@ -44,7 +44,10 @@ def printInner(v, c):
                 continue
             gdb.write('%s = { %s }\n' % (k, v_))
     else:
-        gdb.write('%s = { %s }\n' % (c, v[c]))
+        try:
+            gdb.write('%s = { %s }\n' % (c, v[c]))
+        except gdb.error, e:
+            gdb.GdbError(e.message)
 
 def printInnerTest(v):
     # test print method helps develop this script
