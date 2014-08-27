@@ -8,7 +8,7 @@ How to install:
 ------------
 
 In GDB, do below command at any time you want to use this tool:
-source <PATH-TO-THIS-SCRIPT>/PxPrinter.py
+    source <PATH-TO-THIS-SCRIPT>/PxPrinter.py
 
 How to use:
 -----------
