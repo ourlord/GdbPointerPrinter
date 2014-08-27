@@ -1,6 +1,6 @@
 import gdb
 
-def printHelper(v, c):
+def printInner(v, c):
     if c == None:
         for k in v.type.keys():
             try:
@@ -13,7 +13,7 @@ def printHelper(v, c):
 
 class PxPrinter(gdb.Command):
     def __init__(self):
-        super(TestPrinter, self).__init__(
+        super(PxPrinter, self).__init__(
                 'ppx', gdb.COMMAND_DATA, gdb.COMPLETE_SYMBOL, False)
     def invoke(self, arg, from_tty):
         space_location = arg.find(' ')
@@ -25,6 +25,6 @@ class PxPrinter(gdb.Command):
             v = gdb.parse_and_eval(expr)
         except gdb.error, e:
             raise gdb.GdbError(e.message)
-        printHelper(v, component)
+        printInner(v, component)
 
 PxPrinter()
