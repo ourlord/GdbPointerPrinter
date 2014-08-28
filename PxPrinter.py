@@ -1,41 +1,5 @@
 import gdb
 
-# flag for using superb print
-superb = False
-
-def printInnerSuperb(v, c, level = 0):
-    # advanced version of print, will iterate into each member until we hit the ground
-    indent = ' ' * level * 4
-    # reach the end of iteration, just write that value and return
-    if v.type.keys() == None:
-        if level == 0:
-            gdb.write('%s\n' % (v,))
-        else:
-            gdb.write('%s%s\n' % (indent, v))
-        return
-    else:
-        # if component takes None, we iterate every member
-        if c == None:
-            for k in v.type.keys():
-                try:
-                    print "1"
-                    v_ = v[k]
-                except gdb.error:
-                    print "2"
-                    gdb.write('%s%s\n' % (indent, k))
-                    continue
-                gdb.write('%s%s = {\n' % (indent, k))
-                printInnerSuperb(v_, None, level+1)
-                gdb.write('%s}\n' % (indent,))
-        # we only print out the specific member
-        else:
-            if c in v.type.keys():
-                gdb.write('%s = {\n' % (c,))
-                printInnerSuperb(v[c], None, level+1)
-                gdb.write('%s}\n' % (indent,))
-            else:
-                gdb.write('Member method/parameter not found.\n')
-
 def printInner(v, c):
     # this print just give the normal behavior of this script.
     # won't iterate into each member of the passin object
@@ -76,10 +40,6 @@ class PxPrinter(gdb.Command):
             v = gdb.parse_and_eval(expr)
         except gdb.error, e:
             raise gdb.GdbError(e.message)
-        # development tools flag
-        if superb:
-            printInnerSuperb(v, component)
-        else:
-            printInner(v, component)
+        printInner(v, component)
 
 PxPrinter()
