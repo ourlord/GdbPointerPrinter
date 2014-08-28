@@ -1,4 +1,4 @@
-GDBpxPrinter
+GdbPointerPrinter
 ============
 
 Help to print contents for pointers in GDB.

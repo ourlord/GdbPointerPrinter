@@ -20,18 +20,23 @@ def printInnerSuperb(v, c, level = 0):
         if c == None:
             for k in v.type.keys():
                 try:
+                    print "1"
                     v_ = v[k]
                 except gdb.error:
+                    print "2"
                     gdb.write('%s%s\n' % (indent, k))
                     continue
                 gdb.write('%s%s = {\n' % (indent, k))
-                printInner(v_, None, level+1)
+                printInnerSuperb(v_, None, level+1)
                 gdb.write('%s}\n' % (indent,))
         # we only print out the specific member
         else:
-            gdb.write('%s = {\n' % (c,))
-            printInner(v[c], None, level+1)
-            gdb.write('%s}\n' % (indent,))
+            if c in v.type.keys():
+                gdb.write('%s = {\n' % (c,))
+                printInnerSuperb(v[c], None, level+1)
+                gdb.write('%s}\n' % (indent,))
+            else:
+                gdb.write('Member method/parameter not found.\n')
 
 def printInner(v, c):
     # this print just give the normal behavior of this script.
@@ -44,11 +49,14 @@ def printInner(v, c):
                 continue
             gdb.write('%s = { %s }\n' % (k, v_))
     else:
-        gdb.write('%s = { %s }\n' % (c, v[c]))
+        try:
+            gdb.write('%s = { %s }\n' % (c, v[c]))
+        except gdb.error, e:
+            gdb.GdbError(e.message)
 
 def printInnerTest(v):
     # test print method helps develop this script
-    gdb.write('%s\n' % (v.cast(v['px'].type.strip_typedefs()),))
+    gdb.write('%s\n' % (v['px'].dereference(),))
 
 class PxPrinter(gdb.Command):
     """
