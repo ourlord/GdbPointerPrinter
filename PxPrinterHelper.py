@@ -2,8 +2,10 @@ import gdb
 
 def printInnerTest(v):
     # test print method helps develop this script
-    gdb.write('type:%s; type.target:%s\n' % (v['px'].type, v['px'].type.target()))
-    gdb.write('%s\n' % (v['px'].cast(v['px'].type.target())))
+    if 'px' in v.type.keys():
+        v = v['px']
+    gdb.write('type:%s; type.target:%s\n' % (v.type, v.type.target()))
+    gdb.write('%s\n' % ( v.cast ( v.type ).dereference() ) )
 
 class PxPrinterHelper(gdb.Command):
     """
