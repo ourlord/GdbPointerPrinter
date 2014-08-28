@@ -2,6 +2,7 @@ GdbPointerPrinter
 ============
 
 Help to print contents for pointers in GDB.
+This tool is still under development and construction.
 
 
 How to install:
