@@ -14,7 +14,7 @@ In GDB, do below command at any time you want to use this tool:
 
 How to use:
 -----------
-    ppx *<ptr>.px [component]
+    ppx *<ptr> [member]
 
 For example:
 
@@ -31,7 +31,11 @@ You have this in your source code:
 
 Then in GDB, do
 
-    ppx *a_ptr.px [param1]
+    ppx *a_ptr [param1]
 
 This command will return the content of param1 for the a_ptr object.
 If you don't type in any componenet, the command will just show you all components in the object.
+
+For a boost smart pointer, you might need to do This
+
+    ppx *<ptr>.px [member]
