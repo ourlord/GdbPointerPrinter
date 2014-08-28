@@ -3,16 +3,19 @@ import gdb
 def printInner(v, c):
     # this print just give the normal behavior of this script.
     # won't iterate into each member of the passin object
+    if 'px' in v.type.keys():
+        v = v['px']
+        v = v.cast(v.type).dereference()
     if c == None:
         for k in v.type.keys():
             try:
                 v_ = v[k]
             except gdb.error:
                 continue
-            gdb.write('%s = { %s }\n' % (k, v_))
+            gdb.write( ( '%s = { %s }\n' % (k, v_) ).encode('utf-8') )
     else:
         try:
-            gdb.write('%s = { %s }\n' % (c, v[c]))
+            gdb.write( ( '%s = { %s }\n' % (c, v[c]) ).encode('utf-8') )
         except gdb.error, e:
             gdb.GdbError(e.message)
 
