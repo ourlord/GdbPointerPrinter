@@ -2,8 +2,6 @@ import gdb
 
 # flag for using superb print
 superb = False
-# flag for using test print
-test = False
 
 def printInnerSuperb(v, c, level = 0):
     # advanced version of print, will iterate into each member until we hit the ground
@@ -54,10 +52,6 @@ def printInner(v, c):
         except gdb.error, e:
             gdb.GdbError(e.message)
 
-def printInnerTest(v):
-    # test print method helps develop this script
-    gdb.write('%s\n' % (v['px'].dereference(),))
-
 class PxPrinter(gdb.Command):
     """
     PxPrinter: a printer helps you to print out the content of a pointer invoke
@@ -82,12 +76,10 @@ class PxPrinter(gdb.Command):
             v = gdb.parse_and_eval(expr)
         except gdb.error, e:
             raise gdb.GdbError(e.message)
-        if test:
-            printInnerTest(v)
+        # development tools flag
+        if superb:
+            printInnerSuperb(v, component)
         else:
-            if superb:
-                printInnerSuperb(v, component)
-            else:
-                printInner(v, component)
+            printInner(v, component)
 
 PxPrinter()
