@@ -5,7 +5,7 @@ def printInnerTest(v):
     if 'px' in v.type.keys():
         v = v['px']
     gdb.write('type:%s; type.target:%s\n' % (v.type, v.type.target()))
-    gdb.write('%s\n' % ( v.cast ( v.type ).dereference() ) )
+    gdb.write(('%s\n' % ( v.cast ( v.type ).dereference() ) ).encode('utf-8'))
 
 class PxPrinterHelper(gdb.Command):
     """
