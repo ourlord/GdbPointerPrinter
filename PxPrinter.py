@@ -15,10 +15,21 @@
 import gdb
 
 def printInner(v, c):
+    # see if this is a valid gdb.value
+    try:
+        v.type.keys()
+    except:
+        gdb.write( ('%s\n' % (v,)).encode('utf-8') )
+        return
     # if this pointer is a boost smart pointer, we only cares about the member px
     if 'px' in v.type.keys():
         v = v['px']
-    v = v.dereference()
+    # if this data structure is a normal pointer, we dereference it
+    if '*' in str(v.type.strip_typedefs()):
+        if v == 0x0:
+            gdb.write('NULL\n')
+            return
+        v = v.dereference()
     if c == None:
         # iterate into the keys, print every member in the object
         for k in v.type.keys():
