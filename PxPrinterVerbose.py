@@ -74,11 +74,11 @@ class PxPrinterVerbose(gdb.Command):
     of that object you need to check.
     The verbose version gives you a verbose output.
 
-        ppxv <pointer_variable> [member class/paramter/method]
+        ppv <pointer_variable> [member class/paramter/method]
     """
     def __init__(self):
         super(PxPrinterVerbose, self).__init__(
-                'ppxv', gdb.COMMAND_DATA, gdb.COMPLETE_SYMBOL, False)
+                'ppv', gdb.COMMAND_DATA, gdb.COMPLETE_SYMBOL, False)
     def invoke(self, arg, from_tty):
         # deal with arguments
         space_location = arg.find(' ')
