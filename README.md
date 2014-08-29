@@ -1,7 +1,7 @@
 GdbPointerPrinter
 ============
 
-Help to print contents for pointers in GDB.
+Help to print contents for pointers in GDB. Especially deal with boost smart pointer.
 This tool is still under development and construction.
 
 
