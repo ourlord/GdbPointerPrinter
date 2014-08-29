@@ -91,8 +91,6 @@ class PxPrinterVerbose(gdb.Command):
             v = gdb.parse_and_eval(expr)
         except gdb.error, e:
             raise gdb.GdbError(e.message)
-        gdb.write( ('%s = {\n' % v).encode('utf-8') )
         printInner(v, component)
-        gdb.write('}\n')
 
 PxPrinterVerbose()
