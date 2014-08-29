@@ -9,7 +9,7 @@
 #   
 #   Example of using this command in GDB:
 #
-#   ppx <ptr_variable> [<member you concern about>]
+#   ppxv <ptr_variable> [<member you concern about>]
 #
 
 import gdb
