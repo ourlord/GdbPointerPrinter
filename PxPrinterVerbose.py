@@ -69,10 +69,12 @@ def printInner(v, c, level=0):
 
 class PxPrinterVerbose(gdb.Command):
     """
-    PxPrinter: a printer helps you to print out the content of a pointer invoke
+    PxPrinterVerbos: a printer helps you to print out the content of a pointer in
     core-file especially. The command takes one optional argument, the component
     of that object you need to check.
-        ppx <pointer_variable> [member class/paramter/method]
+    The verbose version gives you a verbose output.
+
+        ppxv <pointer_variable> [member class/paramter/method]
     """
     def __init__(self):
         super(PxPrinterVerbose, self).__init__(
