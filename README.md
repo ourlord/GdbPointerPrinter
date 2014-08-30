@@ -1,33 +1,43 @@
 GdbPointerPrinter
 ============
 
-Help to print contents for pointers in GDB. Especially deal with boost smart pointer.
+GdbPointerPrinter is a suite of Python scripts that aim to simplify the process of printing out the contents of pointers in GDB. In addition to standard pointers, GdbPointerPrinter also supports printing out the contents of smart pointers from the Boost Framework.
 
-This tool is still under development and construction.
+Currently, there are two commands that GdbPointerPrinter provides. Both commands offer the same basic functionality, but one prints verbose output. The verbose version will traverse a data structure, printing out its internal content using an indentation format.
 
-Now there are two version of this command, one is the basic, another is the verbose. The verbose will iterate deep into the data structure and print out every thing inside or it into a indent format. Of course this will fill your screen...
+**Note**: Currently, the two commands conflict. Therefore, it is recommended that you first try both commands individually and then decide which is most convenient for your particular use case.
 
-Choose whether you like the basic one or the verbose one. Two version won't conflict with each other but for some reason, if you load them into Gdb, Gdb will mess them up. For example, you will see verbose output even you type in the basic command...
-
-
-How to install:
+Installation:
 ------------
 
-In GDB, do below command at any time you want to use this tool:
+Execute the following command to import the commands offered by GdbPointerPrinter into GDB:
 
     source <PATH-TO-THIS-SCRIPT>/PxPrinter.py
 
-Change *PxPrinter.py* to *PxPrinterVerbose.py* to use the verbose version.
+Change **PxPrinter.py** to **PxPrinterVerbose.py** if you prefer to use the verbose command.
 
-How to use:
+Usage:
 -----------
+
+*Standard*
+
     ppx <pointer_variable> [member]
+    
+*Verbose*
 
-First argument *pointer_variable* goes to the pointer we want to print. The second argument is optional. If you take that you will only print out that specific member for the object the pointer points to.
+    ppv <pointer_variable> [member]
 
-For example:
+Arguments:
+-----------
 
-You have this in your source code:
+The `<pointer_variable>` argument refers to the identifier of the pointer to be printed.
+
+The `[member]` argument is optional. If provided, only the member specified will be printed.
+
+Example:
+-----------
+
+Imagine you have the following in your soure code:
 
     class A : public B
     {
@@ -36,14 +46,21 @@ You have this in your source code:
       Obj obj1;
       Obj obj2;
     };
+    
     A* a_ptr;
 
-Then in GDB, do
+To print out the value of `param1` in `a_ptr`, execute the following command within GDB:
 
     ppx a_ptr param1
 
-This command will return the content of param1 for the *a_ptr* object.
+If no member is specified (i.e. `ppx a_ptr`), all the contents of `a_ptr` will be printed. 
 
-If you don't type in any componenet, the command will just show you all components in the object.
+Alternatively, to show verbose output, execute the command:
 
-To use the verbose output, just source the *PxPrinterVerbose.py* and use *ppv* instead of *ppx*.
+    source PxPrinterVerbose.py 
+
+and use `ppv` instead of `ppx`, like so:
+
+    ppv a_ptr param1
+
+**Note**: This tool is still under development and construction.
