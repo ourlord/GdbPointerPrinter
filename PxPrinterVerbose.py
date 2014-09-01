@@ -14,7 +14,7 @@
 
 import gdb
 
-def printInner(v, c, level=0):
+def printInnerVerbose(v, c, level=0):
     # caculate indent
     indent = ''
     for i in range(0, level):
@@ -93,6 +93,6 @@ class PxPrinterVerbose(gdb.Command):
             v = gdb.parse_and_eval(expr)
         except gdb.error, e:
             raise gdb.GdbError(e.message)
-        printInner(v, component)
+        printInnerVerbose(v, component)
 
 PxPrinterVerbose()
